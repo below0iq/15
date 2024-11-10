@@ -20,13 +20,18 @@ def get_word_with_letter(first_letter):
     while number <2:
         number+=1
         input_word = input(f"Игрок {number}\nВведите слово на букву {first_letter}: ").upper()
-        if input_word[0] != first_letter:
+        if len(input_word) == 0:
+            print("ВВЕДИ СЛОВО БАЛДА")
+            number-=1
+            continue
+        elif input_word[0] != first_letter:
             print(f"Слово должно начинаться на букву {first_letter}. Попробуйте снова") 
             number-=1
             continue
-        player_word = input_word
-        player_scores = calculate_score(input_word)
-        players_info.append({"word":player_word, "scores":player_scores})
+        else:
+            player_word = input_word
+            player_scores = calculate_score(input_word)
+            players_info.append({"word":player_word, "scores":player_scores})
     return players_info
         
     
@@ -41,12 +46,12 @@ def calculate_score(word):
 
 def main():
     first_letter = get_random_letter()
-    curent_info = get_word_with_letter(first_letter)
+    player_results = get_word_with_letter(first_letter)
     for x in range(2):
-        print(f"Игрок {x+1} ввел слово '{curent_info[x]["word"]}' и набрал {curent_info[x]["scores"]} очков")
-    if curent_info[0]["scores"] > curent_info[1]["scores"]:
+        print(f"Игрок {x+1} ввел слово '{player_results[x]["word"]}' и набрал {player_results[x]["scores"]} очков")
+    if player_results[0]["scores"] > player_results[1]["scores"]:
         print("Победил игрок 1!")
-    elif curent_info[0]["scores"] < curent_info[1]["scores"]:
+    elif player_results[0]["scores"] < player_results[1]["scores"]:
         print("Победил игрок 2!")
     else:
         print("Ничья!")
